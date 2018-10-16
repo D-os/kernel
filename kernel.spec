@@ -69,7 +69,7 @@ Summary: The Linux kernel
 # The rc snapshot level
 %global rcrev 1
 # The git snapshot level
-%define gitrev 0
+%define gitrev 1
 # Set rpm version accordingly
 %define rpmversion 5.%{upstream_sublevel}.0
 %endif
@@ -153,9 +153,9 @@ Summary: The Linux kernel
 %define rctag .ck0
 %endif
 %if 0%{?gitrev}
-%define gittag .git%gitrev
+%define gittag .bcachefs%gitrev
 %else
-%define gittag .git0
+%define gittag .bcachefs0
 %endif
 %define pkg_release 0%{?rctag}%{?gittag}.%{fedora_build}%{?buildid}%{?dist}
 
@@ -472,12 +472,12 @@ Source5000: %{stable_patch_00}
 %if 0%{?rcrev}
 Source5000: patch-5.%{upstream_sublevel}-ck%{rcrev}.xz
 %if 0%{?gitrev}
-Source5001: patch-5.%{upstream_sublevel}-rc%{rcrev}-git%{gitrev}.xz
+Source5001: patch-5.%{upstream_sublevel}-ck%{rcrev}-bcachefs%{gitrev}.xz
 %endif
 %else
 # pre-{base_sublevel+1}-rc1 case
 %if 0%{?gitrev}
-Source5000: patch-5.%{base_sublevel}-git%{gitrev}.xz
+Source5000: patch-5.%{base_sublevel}-bcachefs%{gitrev}.xz
 %endif
 %endif
 %endif
