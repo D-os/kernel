@@ -6,7 +6,7 @@ Summary: The Linux kernel
 # For a stable, released kernel, released_kernel should be 1. For rawhide
 # and/or a kernel built from an rc or git snapshot, released_kernel should
 # be 0.
-%global released_kernel 1
+%global released_kernel 0
 
 # Sign modules on x86.  Make sure the config files match this setting if more
 # architectures are added.
@@ -24,7 +24,7 @@ Summary: The Linux kernel
 %global zipsed -e 's/\.ko$/\.ko.xz/'
 %endif
 
-# define buildid .local
+%define buildid .dos
 
 # baserelease defines which build revision of this kernel version we're
 # building.  We used to call this fedora_build, but the magical name
@@ -65,9 +65,9 @@ Summary: The Linux kernel
 ## The not-released-kernel case ##
 %else
 # The next upstream release sublevel (base_sublevel+1)
-%define upstream_sublevel %(echo $((%{base_sublevel} + 1)))
+%define upstream_sublevel %(echo $((%{base_sublevel} + 0)))
 # The rc snapshot level
-%global rcrev 0
+%global rcrev 1
 # The git snapshot level
 %define gitrev 0
 # Set rpm version accordingly
@@ -148,9 +148,9 @@ Summary: The Linux kernel
 
 # non-released_kernel
 %if 0%{?rcrev}
-%define rctag .rc%rcrev
+%define rctag .ck%rcrev
 %else
-%define rctag .rc0
+%define rctag .ck0
 %endif
 %if 0%{?gitrev}
 %define gittag .git%gitrev
@@ -470,7 +470,7 @@ Source5000: %{stable_patch_00}
 # near the top of this spec file.
 %else
 %if 0%{?rcrev}
-Source5000: patch-5.%{upstream_sublevel}-rc%{rcrev}.xz
+Source5000: patch-5.%{upstream_sublevel}-ck%{rcrev}.xz
 %if 0%{?gitrev}
 Source5001: patch-5.%{upstream_sublevel}-rc%{rcrev}-git%{gitrev}.xz
 %endif
